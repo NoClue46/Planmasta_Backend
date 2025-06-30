@@ -6,7 +6,8 @@ WORKDIR /app
 
 # Copy go.mod and go.sum files first for better caching of dependencies
 COPY go.mod ./
-RUN go mod download
+# Generate go.sum and download dependencies
+RUN go mod download && go mod tidy
 
 # Copy the rest of the source code into the container
 COPY . .
@@ -19,7 +20,7 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Install ca-certificates, important for HTTPS requests
-# RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates
 
 # Copy the executable from the builder stage
 COPY --from=builder /app/server .
