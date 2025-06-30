@@ -19,7 +19,7 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Install ca-certificates, important for HTTPS requests
-RUN apk --no-cache add ca-certificates
+# RUN apk --no-cache add ca-certificates
 
 # Copy the executable from the builder stage
 COPY --from=builder /app/server .
